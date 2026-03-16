@@ -355,6 +355,21 @@
     form.onsubmit = async (e) => {
         e.preventDefault();
         const data = new FormData(form);
+        
+        // Formspree ID가 설정되지 않은 경우를 위한 시뮬레이션 로직
+        if (form.action.includes('your_formspree_id')) {
+            const submitBtn = form.querySelector('button');
+            submitBtn.innerText = '전송 중...';
+            submitBtn.disabled = true;
+            
+            // 실제 전송되는 느낌을 주기 위한 1초 대기
+            setTimeout(() => {
+                form.style.display = 'none';
+                successMessage.style.display = 'block';
+            }, 1000);
+            return;
+        }
+
         const response = await fetch(form.action, {
             method: 'POST',
             body: data,
