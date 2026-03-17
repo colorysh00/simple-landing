@@ -583,23 +583,46 @@
         const progressBar = document.getElementById('progress-bar');
         const percentText = progressBar.parentElement.nextElementSibling.querySelector('strong');
         const maxCount = 300;
-        let currentCount = 120;
+        const targetCount = 120;
+        let currentDisplayCount = 0;
         
-        function refreshUI() {
-            countElement.innerText = currentCount.toLocaleString();
-            const percentage = Math.min((currentCount / maxCount) * 100, 100).toFixed(0);
+        // 초기 애니메이션 (0 -> 120)
+        const duration = 1500; // 1.5초
+        const startTime = Date.now();
+
+        function animate() {
+            const now = Date.now();
+            const elapsed = now - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            
+            currentDisplayCount = Math.floor(progress * targetCount);
+            
+            countElement.innerText = currentDisplayCount.toLocaleString();
+            const percentage = ((currentDisplayCount / maxCount) * 100).toFixed(0);
             progressBar.style.width = percentage + '%';
             percentText.innerText = percentage + '%';
+
+            if (progress < 1) {
+                requestAnimationFrame(animate);
+            } else {
+                startLiveUpdates();
+            }
         }
 
-        setInterval(() => {
-            if (currentCount < maxCount && Math.random() > 0.7) {
-                currentCount += 1;
-                refreshUI();
-            }
-        }, 5000);
+        function startLiveUpdates() {
+            let liveCount = targetCount;
+            setInterval(() => {
+                if (liveCount < maxCount && Math.random() > 0.7) {
+                    liveCount += 1;
+                    countElement.innerText = liveCount.toLocaleString();
+                    const percentage = Math.min((liveCount / maxCount) * 100, 100).toFixed(0);
+                    progressBar.style.width = percentage + '%';
+                    percentText.innerText = percentage + '%';
+                }
+            }, 5000);
+        }
         
-        refreshUI(); // Initial call
+        animate();
     }
     updateWaitingCount();
 </script>
