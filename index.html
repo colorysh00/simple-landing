@@ -55,6 +55,39 @@
     .animate-up { animation: fadeInUp 0.8s ease-out forwards; }
     .float { animation: float 4s ease-in-out infinite; }
 
+    @keyframes ticker {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(-50%); }
+    }
+
+    .ticker-container {
+        width: 100%;
+        overflow: hidden;
+        background: var(--primary);
+        color: white;
+        white-space: nowrap;
+        padding: 12px 0;
+        position: relative;
+        z-index: 999;
+        font-weight: 700;
+        font-size: 16px;
+    }
+
+    .ticker-wrapper {
+        display: inline-block;
+        animation: ticker 20s linear infinite;
+        padding-left: 100%;
+    }
+
+    .ticker-item {
+        display: inline-block;
+        padding: 0 30px;
+    }
+
+    .ticker-item span {
+        margin-right: 10px;
+    }
+
     /* Header */
     header {
         display: flex;
@@ -427,7 +460,21 @@
 </head>
 <body>
 
-<header>
+<div class="ticker-container" style="position: fixed; top: 0; z-index: 1001; height: 40px; display: flex; align-items: center;">
+    <div class="ticker-wrapper">
+        <div class="ticker-item"><span>🪳</span>벌레 마스터</div>
+        <div class="ticker-item"><span>☕</span>커피 딜리버리</div>
+        <div class="ticker-item"><span>📦</span>대신 줄서기</div>
+        <div class="ticker-item"><span>🐶</span>댕댕이 산책</div>
+        <!-- Duplicate for seamless loop -->
+        <div class="ticker-item"><span>🪳</span>벌레 마스터</div>
+        <div class="ticker-item"><span>☕</span>커피 딜리버리</div>
+        <div class="ticker-item"><span>📦</span>대신 줄서기</div>
+        <div class="ticker-item"><span>🐶</span>댕댕이 산책</div>
+    </div>
+</div>
+
+<header style="top: 40px;">
     <a href="#" class="logo">Soiler 🌱</a>
     <nav>
         <a href="#solutions">솔루션</a>
@@ -646,6 +693,20 @@
     }
     updateWaitingCount();
 </script>
+
+<div class="ticker-container" style="margin-top: 60px;">
+    <div class="ticker-wrapper" style="animation-duration: 25s; background: var(--dark);">
+        <div class="ticker-item"><span>🪳</span>벌레 마스터</div>
+        <div class="ticker-item"><span>☕</span>커피 딜리버리</div>
+        <div class="ticker-item"><span>📦</span>대신 줄서기</div>
+        <div class="ticker-item"><span>🐶</span>댕댕이 산책</div>
+        <!-- Duplicate for seamless loop -->
+        <div class="ticker-item"><span>🪳</span>벌레 마스터</div>
+        <div class="ticker-item"><span>☕</span>커피 딜리버리</div>
+        <div class="ticker-item"><span>📦</span>대신 줄서기</div>
+        <div class="ticker-item"><span>🐶</span>댕댕이 산책</div>
+    </div>
+</div>
 
 <footer>
     <h2 style="color: white; margin-bottom: 10px;">Soiler</h2>
