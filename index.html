@@ -612,13 +612,19 @@
         function startLiveUpdates() {
             let liveCount = targetCount;
             // 한 시간에 2명씩 오르도록 설정 (3600000ms / 2 = 1800000ms)
-            setInterval(() => {
+            const interval = setInterval(() => {
                 if (liveCount < maxCount) {
                     liveCount += 1;
                     countElement.innerText = liveCount.toLocaleString();
                     const percentage = Math.min((liveCount / maxCount) * 100, 100).toFixed(0);
                     progressBar.style.width = percentage + '%';
                     percentText.innerText = percentage + '%';
+                    
+                    if (liveCount >= maxCount) {
+                        clearInterval(interval);
+                    }
+                } else {
+                    clearInterval(interval);
                 }
             }, 1800000); 
         }
