@@ -541,13 +541,20 @@
 
 <section class="section animate-up" style="padding-bottom: 40px;">
     <div style="max-width: 600px; margin: 0 auto; background: rgba(0, 102, 255, 0.03); padding: 50px; border-radius: 50px; border: 2px dashed var(--secondary);">
-        <h3 style="font-size: 20px; color: var(--dark); margin-bottom: 20px; font-weight: 700;">실시간 참여 현황 🔥</h3>
-        <div style="display: flex; justify-content: center; align-items: baseline; gap: 10px;">
-            <span style="font-size: 18px; color: #666;">현재</span>
-            <strong id="waiting-count" style="font-size: 60px; color: var(--primary); letter-spacing: -2px;">1,428</strong>
-            <span style="font-size: 18px; color: #666;">명이 대기 중</span>
+        <h3 style="font-size: 20px; color: var(--dark); margin-bottom: 10px; font-weight: 700;">초기 멤버 모집 현황 🚀</h3>
+        <p style="color: #666; margin-bottom: 25px;">선착순 300명 한정, 지금 바로 합류하세요!</p>
+        
+        <div style="display: flex; justify-content: center; align-items: baseline; gap: 10px; margin-bottom: 20px;">
+            <strong id="waiting-count" style="font-size: 60px; color: var(--primary); letter-spacing: -2px;">120</strong>
+            <span style="font-size: 24px; color: #ccc; font-weight: 700;">/ 300</span>
         </div>
-        <p style="margin-top: 15px; color: #888; font-size: 15px;">지금 합류하여 우리 동네 첫 번째 소일러가 되어보세요!</p>
+
+        <!-- Progress Bar -->
+        <div style="width: 100%; height: 12px; background: #eee; border-radius: 10px; overflow: hidden; margin-bottom: 15px;">
+            <div id="progress-bar" style="width: 40%; height: 100%; background: linear-gradient(90deg, var(--primary), var(--accent)); transition: width 1s ease-out;"></div>
+        </div>
+        
+        <p style="color: #888; font-size: 15px;">현재 <strong>40%</strong> 모집 완료! 곧 마감됩니다.</p>
     </div>
 </section>
 
@@ -573,14 +580,26 @@
     // 실시간 대기 인원 업데이트 스크립트
     function updateWaitingCount() {
         const countElement = document.getElementById('waiting-count');
-        let currentCount = parseInt(countElement.innerText.replace(/,/g, ''));
+        const progressBar = document.getElementById('progress-bar');
+        const percentText = progressBar.parentElement.nextElementSibling.querySelector('strong');
+        const maxCount = 300;
+        let currentCount = 120;
         
+        function refreshUI() {
+            countElement.innerText = currentCount.toLocaleString();
+            const percentage = Math.min((currentCount / maxCount) * 100, 100).toFixed(0);
+            progressBar.style.width = percentage + '%';
+            percentText.innerText = percentage + '%';
+        }
+
         setInterval(() => {
-            if (Math.random() > 0.3) {
-                currentCount += Math.floor(Math.random() * 3);
-                countElement.innerText = currentCount.toLocaleString();
+            if (currentCount < maxCount && Math.random() > 0.7) {
+                currentCount += 1;
+                refreshUI();
             }
-        }, 3000);
+        }, 5000);
+        
+        refreshUI(); // Initial call
     }
     updateWaitingCount();
 </script>
