@@ -599,7 +599,7 @@
         <p style="color: #666; margin-bottom: 25px;">선착순 300명 한정, 지금 바로 합류하세요!</p>
         
         <div style="display: flex; justify-content: center; align-items: baseline; gap: 10px; margin-bottom: 20px;">
-            <strong id="waiting-count" style="font-size: 60px; color: var(--primary); letter-spacing: -2px;">70</strong>
+            <strong id="waiting-count" style="font-size: 60px; color: var(--primary); letter-spacing: -2px;">50</strong>
             <span style="font-size: 24px; color: #ccc; font-weight: 700;">/ 300</span>
         </div>
 
@@ -638,15 +638,15 @@
         const percentText = progressBar.parentElement.nextElementSibling.querySelector('strong');
         const maxCount = 300;
         
-        // 기준 시간 (2026년 3월 17일 00:00:00)
-        const referenceTime = new Date('2026-03-17T00:00:00').getTime();
+        // 기준 시간 (현재 시점: 2026년 3월 17일 11:45:00 기준)
+        const referenceTime = new Date('2026-03-17T11:45:00').getTime();
         const now = Date.now();
         
         // 기준 시간으로부터 흐른 30분 단위 개수 계산
         const intervalsPassed = Math.floor((now - referenceTime) / (30 * 60 * 1000));
         
-        // 시작 숫자 70명 + 30분마다 1명씩 추가 (최대 300명)
-        const targetCount = Math.min(70 + intervalsPassed, maxCount);
+        // 시작 숫자 50명 + 30분마다 1명씩 추가 (최대 300명)
+        const targetCount = Math.min(50 + intervalsPassed, maxCount);
         let currentDisplayCount = 0;
         
         // 초기 애니메이션 (0 -> 현재 계산된 인원)
